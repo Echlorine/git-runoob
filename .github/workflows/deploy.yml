@@ -1,0 +1,41 @@
+name: Deploy GitHub Pages
+
+# 触发条件：在 push 到 dev 分支后
+on:
+  push:
+    branches:
+      - dev
+
+# 任务
+jobs:
+  build-and-deploy:
+    # 服务器环境：最新版 Ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      # 拉取代码
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          # "最近更新时间"等 git 日志相关信息，需要拉取全部提交记录
+          fetch-depth: 0
+
+      # 安装 Node 环境
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          # 选择要使用的 node 版本
+          node-version: '18'
+
+      # 生成静态文件
+      - name: Build 🪂
+        run: bash build.sh
+      
+      # 部署到 GitHub Pages
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+          # 部署到 gh-pages 分支
+          branch: gh-pages
+          # 部署目录为 VuePress 的默认输出目录
+          folder: docs/.vuepress/dist

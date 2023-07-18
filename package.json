@@ -1,0 +1,15 @@
+{
+  "name": "git-runoob",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Echlorine/git-runoob.git",
+  "author": "Echlorine",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "vuepress": "^1.9.9"
+  },
+  "scripts": {
+    "docs:dev": "export NODE_OPTIONS=--openssl-legacy-provider && vuepress dev docs",
+    "docs:build": "export NODE_OPTIONS=--openssl-legacy-provider && vuepress build docs"
+  }
+}
